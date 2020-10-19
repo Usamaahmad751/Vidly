@@ -1,0 +1,63 @@
+﻿@model Vidly.ViewModel.CustomerFormViewModel
+
+@{
+    ViewBag.Title = "CustomerForm";
+}
+
+<h2>New</h2>
+
+@using (Html.BeginForm("Save","Customer")) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Customer</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Customer.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Customer.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Customer.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p>Date Of Birth</p>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Customer.BirthDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Customer.BirthDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.MemberShipTypes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Customer.MemberShipTypeId, new SelectList(Model.MemberShipTypes, "Id", "name"), "Select Membership Type", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Customer.MemberShipTypeId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div class="checkbox">
+            @Html.EditorFor(model => model.Customer.IsSubscribedToNewsLetter)
+            @Html.ValidationMessageFor(model => model.Customer.IsSubscribedToNewsLetter, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Customer.IsSubscribedToNewsLetter, htmlAttributes: new { @class = "control-label col-md-2" })
+
+        </div>
+    </div>
+    @Html.HiddenFor(m=>m.Customer.Id )
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
